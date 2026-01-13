@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PlayTiger</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1>🐯 PlayTiger</h1>
+      <p id="status">Carregando...</p>
+      <a href="login.html">Entrar</a> •
+      <a href="dashboard.html">Dashboard</a> •
+      <a href="games/memory/index.html">Jogo Memory</a>
+    </div>
+  </header>
+
+  <script src="assets/js/core.js"></script>
+  <script>
+    document.getElementById("status").textContent =
+      "OK: CSS + JS carregados. TGC=" + PlayTiger.wallet.getTGC();
+  </script>
+</body>
+</html>
