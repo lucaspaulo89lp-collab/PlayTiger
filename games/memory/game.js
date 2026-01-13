@@ -4,8 +4,18 @@
   // Header wallet
   const u = PlayTiger.user.get();
   el("hello").textContent = "Olá, " + u.name;
+
   const refreshWallet = () => el("walletTGC").textContent = PlayTiger.wallet.getTGC();
   refreshWallet();
+
+  // SFX toggle
+  const sfxState = el("sfxState");
+  const renderSfx = () => sfxState.textContent = (window.PlayTigerSFX?.isOn?.() ? "ON" : "OFF");
+  renderSfx();
+  el("sfxToggle").addEventListener("click", () => {
+    try { PlayTigerSFX.toggle(); PlayTigerSFX.click(); } catch {}
+    renderSfx();
+  });
 
   // UI
   const board = el("board");
@@ -22,7 +32,19 @@
   const msgEl = el("msg");
   const recordsEl = el("records");
 
-  // Storage for records
+  // Win modal
+  const winModal = el("winModal");
+  const winText = el("winText");
+  const btnCashout2 = el("btnCashout2");
+  const btnCloseWin = el("btnCloseWin");
+
+  btnCloseWin.onclick = () => winModal.classList.remove("is-open");
+  btnCashout2.onclick = () => {
+    cashoutBtn.click();
+    winModal.classList.remove("is-open");
+  };
+
+  // Records storage
   const RKEY = "playtiger_memory_records"; // { "4x4": bestSeconds, ... }
   const loadRecords = () => {
     try { return JSON.parse(localStorage.getItem(RKEY) || "{}"); }
@@ -84,22 +106,16 @@
   }
 
   function computeReward(){
-    // Recompensa 100% por habilidade: menos tempo e menos movimentos = mais TGC
-    // Cap para evitar farm exagerado
     const mode = modeSel.value;
     const baseByMode = { "4x4": 60, "4x5": 90, "6x6": 140 }[mode] || 60;
 
-    // penalidades suaves
     const timePenalty = Math.floor(seconds * 0.9);
     const movesPenalty = Math.floor(Math.max(0, moves - pairsTotal) * 2);
 
     const raw = baseByMode - timePenalty - movesPenalty;
-
-    // bônus por excelente performance
     const bonus = (seconds <= pairsTotal * 4) ? 20 : 0;
 
-    const total = Math.max(5, Math.min(250, raw + bonus));
-    return total;
+    return Math.max(5, Math.min(250, raw + bonus));
   }
 
   function setBoardGrid(rows, cols){
@@ -124,6 +140,8 @@
     startBtn.disabled = false;
     restartBtn.disabled = true;
     cashoutBtn.disabled = true;
+
+    winModal.classList.remove("is-open");
   }
 
   function startTimer(){
@@ -144,13 +162,11 @@
     pairsTotalEl.textContent = String(pairsTotal);
 
     const chosen = icons.slice(0, pairsTotal);
-    const deck = shuffle([...chosen, ...chosen].map((icon, idx) => ({
+    return shuffle([...chosen, ...chosen].map((icon, idx) => ({
       id: idx + "_" + icon,
       icon,
       matched: false
     })));
-
-    return deck;
   }
 
   function renderBoard(deck, rows, cols){
@@ -182,37 +198,40 @@
     if (card.matched) return;
     if (btn.classList.contains("is-flipped")) return;
 
+    try{ PlayTigerSFX.flip(); }catch{}
+
     btn.classList.add("is-flipped");
 
     if (!first){
       first = { btn, card };
       return;
     }
+
     second = { btn, card };
     moves += 1;
     movesEl.textContent = String(moves);
 
-    // match?
     if (first.card.icon === second.card.icon){
       first.card.matched = true;
       second.card.matched = true;
+
       first.btn.classList.add("is-matched");
       second.btn.classList.add("is-matched");
 
       pairs += 1;
       pairsEl.textContent = String(pairs);
 
+      try{ PlayTigerSFX.click(); }catch{}
+      if (navigator.vibrate) navigator.vibrate(12);
+
       first = null;
       second = null;
 
-      // win?
-      if (pairs === pairsTotal){
-        finishGame();
-      }
+      if (pairs === pairsTotal) finishGame();
       return;
     }
 
-    // no match: flip back
+    try{ PlayTigerSFX.error(); }catch{}
     lock = true;
     setTimeout(() => {
       first.btn.classList.remove("is-flipped");
@@ -230,25 +249,35 @@
     earned = computeReward();
     rewardEl.textContent = String(earned);
 
-    // update records
     const mode = modeSel.value;
     const r = loadRecords();
     const best = r[mode];
+
+    let isRecord = false;
     if (!Number.isFinite(best) || seconds < best){
       r[mode] = seconds;
       saveRecords(r);
       renderRecords();
-      msgEl.textContent = `Você venceu em ${seconds}s! Novo recorde ✅ Recompensa: ${earned} TGC.`;
-    } else {
-      msgEl.textContent = `Você venceu em ${seconds}s! Recompensa: ${earned} TGC.`;
+      isRecord = true;
     }
 
     restartBtn.disabled = false;
     cashoutBtn.disabled = false;
     startBtn.disabled = true;
 
-    // estatística geral
+    // stats
     PlayTiger.stats.incGamesPlayed();
+
+    // feedback win
+    try{ PlayTigerSFX.win(); }catch{}
+    if (navigator.vibrate) navigator.vibrate([18, 30, 18]);
+
+    winText.textContent = isRecord
+      ? `Novo recorde! Você venceu em ${seconds}s e ganhou ${earned} TGC.`
+      : `Você venceu em ${seconds}s e ganhou ${earned} TGC.`;
+
+    winModal.classList.add("is-open");
+    msgEl.textContent = "Partida concluída. Coleta disponível ✅";
   }
 
   let deck = [];
@@ -256,10 +285,8 @@
     resetUI();
 
     const { rows, cols } = modeConfig(modeSel.value);
-
-    // garante paridade
     if ((rows * cols) % 2 !== 0){
-      msgEl.textContent = "Modo inválido (número de cartas precisa ser par).";
+      msgEl.textContent = "Modo inválido (precisa ser par).";
       return;
     }
 
@@ -285,8 +312,13 @@
     msgEl.textContent = "Boa! Encontre todos os pares.";
   }
 
-  startBtn.addEventListener("click", newGame);
+  startBtn.addEventListener("click", () => {
+    try{ PlayTigerSFX.click(); }catch{}
+    newGame();
+  });
+
   restartBtn.addEventListener("click", () => {
+    try{ PlayTigerSFX.click(); }catch{}
     startBtn.disabled = false;
     newGame();
   });
@@ -306,7 +338,6 @@
   });
 
   modeSel.addEventListener("change", () => {
-    // prepara tabuleiro “vazio” na nova grade
     const { rows, cols } = modeConfig(modeSel.value);
     setBoardGrid(rows, cols);
     board.innerHTML = "";
