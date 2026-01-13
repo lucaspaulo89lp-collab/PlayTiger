@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard — PlayTiger</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+  <div class="container" style="padding:20px">
+    <h2>Dashboard (placeholder)</h2>
+    <p id="tgc"></p>
+    <p><a href="./">Voltar</a></p>
+  </div>
+
+  <script src="assets/js/core.js"></script>
+  <script>
+    document.getElementById("tgc").textContent = "TGC atual: " + PlayTiger.wallet.getTGC();
+  </script>
+</body>
+</html>
