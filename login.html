@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PlayTiger — Arcade Premium</title>
-  <meta name="description" content="PlayTiger: desafios rápidos de foco, memória e reflexo. Progressão com TigerCoin (fictícia). Sem apostas. Sem dinheiro real." />
+  <title>Entrar — PlayTiger</title>
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
-
   <header class="topbar">
     <div class="container topbar__inner">
       <a class="brand" href="./">
@@ -17,11 +15,11 @@
       </a>
 
       <nav class="nav">
+        <a class="nav__link" href="./">Home</a>
         <a class="nav__link" href="dashboard.html">Dashboard</a>
-        <a class="nav__link" href="login.html">Conta</a>
       </nav>
 
-      <div class="wallet" aria-label="Carteira TigerCoin">
+      <div class="wallet">
         <span class="wallet__label" id="hello">Olá</span>
         <span class="wallet__value" id="walletTGC">0</span>
         <span class="wallet__unit">TGC</span>
@@ -30,146 +28,55 @@
   </header>
 
   <main class="container">
-    <!-- HERO PREMIUM COM IMAGEM -->
-    <section class="heroPremium">
-      <div class="heroPremium__bg" aria-hidden="true"></div>
-
-      <div class="heroPremium__content">
-        <span class="chip">Treino mental premium</span>
-
-        <h1 class="heroPremium__title">
-          Jogue 2 minutos. <span class="accent">Evolua</span> para sempre.
-        </h1>
-
-        <p class="heroPremium__subtitle">
-          Desafios de foco, memória e reflexo com progressão. Sem apostas. Sem dinheiro real.
-          Apenas habilidade e recompensas internas (TigerCoin).
-        </p>
-
-        <div class="heroPremium__actions">
-          <a class="btn btn--primary" href="games/clicker/index.html">Começar agora</a>
-          <button class="btn btn--ghost" id="btnDaily">Bônus diário</button>
-          <span class="heroPremium__note" id="dailyHint"></span>
-        </div>
-
-        <div class="kpis">
-          <div class="kpi">
-            <div class="kpi__label">Seu saldo</div>
-            <div class="kpi__value"><span id="kpiTGC">0</span> <span class="kpi__unit">TGC</span></div>
-          </div>
-          <div class="kpi">
-            <div class="kpi__label">Streak</div>
-            <div class="kpi__value"><span id="kpiStreak">0</span> dias</div>
-          </div>
-          <div class="kpi">
-            <div class="kpi__label">Melhor Clicker</div>
-            <div class="kpi__value"><span id="kpiBestTPS">0.0</span> TPS</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- JOGOS COM IMAGENS -->
     <section class="section">
       <div class="section__head">
-        <h2 class="section__title">Jogos</h2>
-        <p class="section__desc">Escolha um desafio. Ganhe TGC e acompanhe sua evolução no Dashboard.</p>
+        <h1 class="section__title">Entrar</h1>
+        <p class="section__desc">Login local (sem senha). Seu nome fica salvo no navegador.</p>
       </div>
 
-      <div class="grid">
-        <article class="cardMedia">
-          <div class="cardMedia__img" style="background-image:url('assets/img/clicker.webp');"></div>
-          <div class="cardMedia__body">
-            <div class="cardMedia__top">
-              <span class="badge badge--live">Recomendado</span>
-              <span class="badge">2 min</span>
-            </div>
-            <h3 class="cardMedia__title">Tiger Clicker</h3>
-            <p class="cardMedia__text">Reflexo + consistência. Ganhe TGC e desbloqueie upgrades.</p>
-            <div class="cardMedia__actions">
-              <a class="btn btn--primary" href="games/clicker/index.html">Jogar</a>
-              <a class="btn btn--ghost" href="dashboard.html">Ver progresso</a>
-            </div>
-          </div>
-        </article>
+      <div class="card" style="max-width:520px;">
+        <label class="muted" for="name">Nome do jogador</label>
+        <input id="name" autocomplete="nickname"
+          style="width:100%;margin:10px 0 12px;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.2);color:#fff;"
+          placeholder="Ex: Lucas" />
 
-        <article class="cardMedia">
-          <div class="cardMedia__img" style="background-image:url('assets/img/memory.webp');"></div>
-          <div class="cardMedia__body">
-            <div class="cardMedia__top">
-              <span class="badge">Foco</span>
-              <span class="badge">Memória</span>
-            </div>
-            <h3 class="cardMedia__title">Tiger Memory</h3>
-            <p class="cardMedia__text">Encontre pares rápido. Recompensa baseada em desempenho.</p>
-            <div class="cardMedia__actions">
-              <a class="btn btn--primary" href="games/memory/">Jogar</a>
-              <span class="muted" style="font-size:12px">Recordes por dificuldade</span>
-            </div>
-          </div>
-        </article>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn--primary" id="btnLogin">Entrar</button>
+          <button class="btn btn--ghost" id="btnLogout">Sair</button>
+          <a class="btn btn--ghost" href="./">Voltar</a>
+        </div>
 
-        <article class="cardMedia">
-          <div class="cardMedia__img" style="background-image:url('assets/img/2048.webp');"></div>
-          <div class="cardMedia__body">
-            <div class="cardMedia__top">
-              <span class="badge">Estratégia</span>
-              <span class="badge">Score</span>
-            </div>
-            <h3 class="cardMedia__title">Tiger 2048</h3>
-            <p class="cardMedia__text">Combine peças, bata seu recorde e ganhe TGC por pontuação.</p>
-            <div class="cardMedia__actions">
-              <a class="btn btn--ghost" href="games/2048/index.html">Abrir</a>
-              <span class="muted" style="font-size:12px">versão completa já já</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- TRANSPARÊNCIA -->
-    <section class="section">
-      <div class="legalbox">
-        <h3 class="legalbox__title">Transparência</h3>
-        <ul class="legalbox__list">
-          <li>✅ TigerCoin (TGC) é fictícia e só existe dentro do PlayTiger.</li>
-          <li>✅ Sem apostas, sem conversão em dinheiro, sem premiação real.</li>
-          <li>✅ Recompensas baseadas em habilidade e desempenho.</li>
-        </ul>
+        <p class="hint" id="msg"></p>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span>© <span id="year"></span> PlayTiger</span>
-      <span class="muted">Arcade premium de desafios (sem dinheiro real).</span>
-    </div>
-  </footer>
-
   <script src="assets/js/core.js"></script>
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-
     const u = PlayTiger.user.get();
-    const s = PlayTiger.stats.get();
-
-    const setWalletUI = () => {
-      const tgc = PlayTiger.wallet.getTGC();
-      document.getElementById("walletTGC").textContent = tgc;
-      document.getElementById("kpiTGC").textContent = tgc;
-    };
-
     document.getElementById("hello").textContent = "Olá, " + u.name;
-    document.getElementById("kpiStreak").textContent = s.streak || 0;
-    document.getElementById("kpiBestTPS").textContent = (s.clicker?.bestTPS || 0).toFixed(1);
-    setWalletUI();
+    document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
 
-    const hint = document.getElementById("dailyHint");
-    document.getElementById("btnDaily").addEventListener("click", () => {
-      const r = PlayTiger.stats.claimDailyBonus();
-      setWalletUI();
-      hint.textContent = r.message;
+    const input = document.getElementById("name");
+    input.value = (u.isLogged && u.name !== "Visitante") ? u.name : "";
+
+    const msg = document.getElementById("msg");
+
+    document.getElementById("btnLogin").addEventListener("click", () => {
+      const r = PlayTiger.user.login(input.value);
+      msg.textContent = r.message;
+      if (r.ok) setTimeout(() => location.href = "dashboard.html", 350);
+    });
+
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      PlayTiger.user.logout();
+      msg.textContent = "Você saiu. Agora está como Visitante.";
+      document.getElementById("hello").textContent = "Olá, Visitante";
+      input.value = "";
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") document.getElementById("btnLogin").click();
     });
   </script>
 </body>
