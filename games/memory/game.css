@@ -124,3 +124,35 @@ select{
 }
 .record__name{font-weight:1000}
 .record__val{color:var(--muted); margin-top:4px}
+/* match feedback premium */
+.card.is-matched{
+  animation: pop .22s cubic-bezier(.2,.9,.2,1);
+}
+@keyframes pop{
+  0%{transform:scale(.98)}
+  60%{transform:scale(1.02)}
+  100%{transform:scale(1)}
+}
+
+/* modal vitória */
+.winModal{
+  position:fixed; inset:0;
+  display:none;
+  place-items:center;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(10px);
+  z-index:50;
+}
+.winModal.is-open{display:grid}
+.winModal__card{
+  width:min(520px, 92vw);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  background: linear-gradient(180deg, rgba(17,24,38,.92), rgba(10,14,20,.88));
+  box-shadow: 0 30px 90px rgba(0,0,0,.65);
+  padding:18px;
+}
+.winModal__title{margin:0 0 6px;font-size:20px}
+.winModal__text{margin:0 0 14px;color:var(--muted);line-height:1.45}
+.winModal__row{display:flex;gap:10px;flex-wrap:wrap}
+
