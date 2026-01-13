@@ -7,21 +7,46 @@
   <link rel="stylesheet" href="../../assets/css/main.css" />
 </head>
 <body>
-  <div class="container" style="padding:20px">
-    <h2>Tiger Memory (placeholder)</h2>
-    <button id="gain">Ganhar +10 TGC</button>
-    <p id="out"></p>
-    <p><a href="../../">Voltar</a></p>
-  </div>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="../../">
+        <span class="brand__mark">🐯</span>
+        <span class="brand__text">PlayTiger</span>
+      </a>
+      <nav class="nav">
+        <a class="nav__link" href="../../">Home</a>
+        <a class="nav__link" href="../../dashboard.html">Dashboard</a>
+      </nav>
+      <div class="wallet">
+        <span class="wallet__label" id="hello">Olá</span>
+        <span class="wallet__value" id="walletTGC">0</span>
+        <span class="wallet__unit">TGC</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section__head">
+        <h1 class="section__title">Tiger Memory</h1>
+        <p class="section__desc">Em construção — próximo jogo completo depois do Clicker.</p>
+      </div>
+
+      <div class="card">
+        <p class="card__text">Status: página carregando corretamente ✅</p>
+        <p class="card__text muted">Na próxima etapa eu te entrego o Memory completo com:
+          dificuldade, tempo, pontuação e recompensa em TGC.
+        </p>
+        <a class="btn btn--primary" href="../../">Voltar para Home</a>
+      </div>
+    </section>
+  </main>
 
   <script src="../../assets/js/core.js"></script>
   <script>
-    const out = document.getElementById("out");
-    out.textContent = "TGC: " + PlayTiger.wallet.getTGC();
-    document.getElementById("gain").addEventListener("click", () => {
-      PlayTiger.wallet.addTGC(10);
-      out.textContent = "TGC: " + PlayTiger.wallet.getTGC();
-    });
+    const u = PlayTiger.user.get();
+    document.getElementById("hello").textContent = "Olá, " + u.name;
+    document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
   </script>
 </body>
 </html>
