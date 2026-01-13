@@ -1,4 +1,3 @@
-<!-- FORCE UPDATE MEMORY V2 -->
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -15,15 +14,21 @@
         <span class="brand__mark">🐯</span>
         <span class="brand__text">PlayTiger</span>
       </a>
+
       <nav class="nav">
         <a class="nav__link" href="../../">Home</a>
         <a class="nav__link" href="../../dashboard.html">Dashboard</a>
       </nav>
+
       <div class="wallet">
         <span class="wallet__label" id="hello">Olá</span>
         <span class="wallet__value" id="walletTGC">0</span>
         <span class="wallet__unit">TGC</span>
       </div>
+
+      <button class="sfxToggle" id="sfxToggle" type="button" aria-label="Alternar som">
+        Som: <span id="sfxState">ON</span>
+      </button>
     </div>
   </header>
 
@@ -96,7 +101,20 @@
     </section>
   </main>
 
+  <!-- Modal de vitória -->
+  <div class="winModal" id="winModal" role="dialog" aria-modal="true">
+    <div class="winModal__card">
+      <h3 class="winModal__title">Vitória 🎉</h3>
+      <p class="winModal__text" id="winText">Você venceu!</p>
+      <div class="winModal__row">
+        <button class="btn btn--primary" id="btnCashout2">Coletar TGC</button>
+        <button class="btn btn--ghost" id="btnCloseWin">Fechar</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../../assets/js/core.js"></script>
+  <script src="../../assets/js/sfx.js"></script>
   <script src="./game.js"></script>
 </body>
 </html>
