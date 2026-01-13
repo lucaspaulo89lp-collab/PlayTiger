@@ -1,293 +1,35 @@
-/* PlayTiger — Tiger Clicker (Premium UI) */
+/* Premium tweaks for Tiger Clicker page (keeps existing IDs/classes) */
 
-:root{
-  --bg0:#070a0f;
-  --bg1:#0b0f14;
-  --card:rgba(255,255,255,.06);
-  --stroke:rgba(255,255,255,.12);
-  --text:rgba(255,255,255,.92);
-  --muted:rgba(255,255,255,.72);
-  --shadow: 0 22px 70px rgba(0,0,0,.60);
-  --gold: rgba(255,200,80,1);
-  --blue: rgba(80,140,255,1);
-  --r: 22px;
-  --ease: cubic-bezier(.2,.9,.2,1);
+main .container, .container{}
+
+#tapArea, .tapArea, .arena, .board{
+  border-radius: 26px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)) !important;
+  box-shadow: 0 22px 70px rgba(0,0,0,.42) !important;
 }
 
-*{ box-sizing:border-box; }
-
-html,body{
-  background:
-    radial-gradient(1200px 600px at 12% 10%, rgba(247,200,67,.10), transparent 55%),
-    radial-gradient(900px 520px at 85% 20%, rgba(80,140,255,.12), transparent 60%),
-    linear-gradient(180deg, var(--bg0), var(--bg1));
-  color: var(--text);
+button, .btn{
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.06) !important;
+  color: rgba(255,255,255,.92) !important;
+  padding: 10px 14px !important;
+}
+button:hover, .btn:hover{
+  border-color: rgba(255,255,255,.20) !important;
+  background: rgba(255,255,255,.08) !important;
+}
+button.primary, .btn--brand{
+  border-color: rgba(246,196,83,.35) !important;
+  background: rgba(246,196,83,.10) !important;
+  color: rgba(255,255,255,.95) !important;
+}
+button.primary:hover, .btn--brand:hover{
+  background: rgba(246,196,83,.14) !important;
 }
 
-a{ color: rgba(255,215,90,.9); }
-a:hover{ color: rgba(255,215,90,1); }
+h1,h2,h3{letter-spacing:-.2px}
+p,small{color: rgba(255,255,255,.72)}
 
-.container{
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 18px 16px 40px;
-}
-
-.topbar{
-  position: sticky;
-  top:0;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-  background: linear-gradient(180deg, rgba(7,10,15,.85), rgba(7,10,15,.55));
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.topbar__inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 12px;
-  padding: 12px 16px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  text-decoration:none;
-  font-weight:700;
-  color: var(--text);
-}
-.nav{
-  display:flex;
-  gap: 12px;
-  flex-wrap:wrap;
-}
-.nav__link{
-  text-decoration:none;
-  color: rgba(255,255,255,.80);
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.16);
-}
-.nav__link:hover{
-  background: rgba(255,255,255,.06);
-  border-color: rgba(255,255,255,.16);
-}
-
-.wallet{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.16);
-}
-.wallet__label{ color: rgba(255,255,255,.70); font-size:12px; }
-.wallet__value{ font-weight:700; }
-.wallet__unit{ color: rgba(255,255,255,.65); font-size:12px; }
-
-.sfxToggle{
-  margin-left:10px;
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  color: rgba(255,255,255,.85);
-  font-size:12px;
-  cursor:pointer;
-}
-.sfxToggle:hover{ background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); }
-
-/* ===== Layout ===== */
-.grid{
-  display:grid;
-  grid-template-columns: 1.2fr .95fr;
-  gap: 14px;
-  align-items:start;
-}
-@media (max-width: 980px){
-  .grid{ grid-template-columns: 1fr; }
-}
-
-.panel{
-  border: 1px solid var(--stroke);
-  border-radius: var(--r);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-  box-shadow: var(--shadow);
-  overflow:hidden;
-}
-
-.panel__head{
-  padding: 14px 14px 10px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 12px;
-}
-
-.panel__title{
-  margin:0;
-  font-size: 16px;
-  letter-spacing: -.2px;
-}
-
-.panel__body{
-  padding: 14px;
-}
-
-.hud{
-  display:grid;
-  grid-template-columns: repeat(5, minmax(0,1fr));
-  gap: 10px;
-  margin-top: 10px;
-}
-@media (max-width: 980px){
-  .hud{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-
-.stat{
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.16);
-  border-radius: 16px;
-  padding: 10px 10px;
-}
-.stat__k{ font-size: 11px; color: rgba(255,255,255,.70); }
-.stat__v{ font-size: 18px; font-weight: 800; letter-spacing:-.3px; margin-top: 2px; }
-
-/* ===== Botão TAP ===== */
-.tapWrap{
-  margin-top: 12px;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,.10);
-  background:
-    radial-gradient(900px 420px at 25% 25%, rgba(247,200,67,.12), transparent 60%),
-    radial-gradient(900px 420px at 75% 35%, rgba(80,140,255,.14), transparent 62%),
-    rgba(0,0,0,.18);
-  box-shadow: 0 18px 50px rgba(0,0,0,.60);
-  padding: 16px;
-}
-
-.tapBtn{
-  width: 100%;
-  height: 300px;
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,.10);
-  background:
-    radial-gradient(220px 220px at 50% 50%, rgba(255,215,90,.10), rgba(0,0,0,0) 60%),
-    rgba(0,0,0,.22);
-  color: rgba(255,255,255,.92);
-  font-weight: 800;
-  letter-spacing: .6px;
-  cursor:pointer;
-  position: relative;
-  overflow:hidden;
-  transition: transform .12s var(--ease), filter .12s var(--ease), box-shadow .12s var(--ease);
-}
-
-.tapBtn:hover{
-  filter: brightness(1.05);
-  box-shadow: 0 0 0 1px rgba(255,215,90,.18), 0 20px 50px rgba(0,0,0,.62);
-}
-.tapBtn:active{ transform: translateY(1px) scale(.995); }
-
-.tapBtn .big{
-  font-size: 54px;
-  line-height: 1;
-  text-shadow: 0 2px 10px rgba(0,0,0,.65);
-}
-.tapBtn .small{
-  display:block;
-  margin-top: 6px;
-  font-size: 12px;
-  color: rgba(255,255,255,.72);
-  font-weight: 600;
-}
-
-/* pulse */
-.tapBtn::after{
-  content:"";
-  position:absolute;
-  inset:-40%;
-  background: radial-gradient(circle at 50% 50%, rgba(255,215,90,.16), transparent 55%);
-  opacity: .0;
-  transform: scale(.9);
-  transition: opacity .18s var(--ease), transform .18s var(--ease);
-}
-.tapBtn:hover::after{
-  opacity: .9;
-  transform: scale(1);
-}
-
-/* ===== Botões ===== */
-.btn{
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.06);
-  color: var(--text);
-  padding: 10px 12px;
-  cursor:pointer;
-  transition: transform .12s var(--ease), filter .12s var(--ease), box-shadow .12s var(--ease);
-}
-.btn:hover{ filter: brightness(1.08); }
-.btn:active{ transform: translateY(1px) scale(.99); }
-
-.btn--primary{
-  background: linear-gradient(180deg, rgba(255,215,90,.22), rgba(255,215,90,.08));
-  border-color: rgba(255,215,90,.28);
-  box-shadow: 0 0 0 1px rgba(255,215,90,.12);
-}
-.btn--primary:hover{
-  box-shadow: 0 0 0 1px rgba(255,215,90,.26), 0 10px 24px rgba(255,180,60,.18);
-}
-.btn:disabled{ opacity:.45; cursor:not-allowed; }
-
-/* ===== Loja / Upgrades ===== */
-.shop{
-  display:grid;
-  gap: 10px;
-}
-
-.shopRow{
-  display:grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
-  align-items:center;
-  padding: 12px 12px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.16);
-}
-
-.shopRow b{ display:block; margin-bottom: 2px; }
-.shopRow small{ color: rgba(255,255,255,.70); }
-
-.priceTag{
-  display:flex;
-  align-items:center;
-  gap: 10px;
-}
-
-.price{
-  font-weight:800;
-  color: rgba(255,255,255,.92);
-}
-
-/* ===== Records ===== */
-.records{
-  margin-top: 12px;
-  display:grid;
-  gap: 10px;
-}
-
-.recordItem{
-  padding: 10px 10px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(0,0,0,.16);
-}
-.recordItem .k{ font-size: 11px; color: rgba(255,255,255,.70); }
-.recordItem .v{ font-weight: 800; margin-top: 2px; }
+hr{border:none;height:1px;background:rgba(255,255,255,.08)}
