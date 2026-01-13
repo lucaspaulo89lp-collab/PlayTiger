@@ -1,0 +1,126 @@
+.memory-wrap{
+  display:grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap:14px;
+}
+@media (max-width: 900px){
+  .memory-wrap{grid-template-columns:1fr}
+}
+.panel{
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  background:linear-gradient(180deg, rgba(17,24,38,.70), rgba(15,22,34,.60));
+  box-shadow:var(--shadow);
+  padding:18px;
+}
+.panel--side{height:fit-content}
+.panel__head{margin-bottom:12px}
+.panel__title{margin:0 0 6px; font-size:20px}
+.panel__sub{margin:0; color:var(--muted); line-height:1.35}
+
+.controls{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  align-items:flex-end;
+  margin:12px 0 10px;
+}
+.select{min-width:220px}
+select{
+  width:100%;
+  margin-top:6px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.20);
+  color:var(--text);
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:10px;
+  flex:1;
+}
+@media (max-width: 700px){
+  .stats{grid-template-columns:repeat(2, minmax(0,1fr))}
+}
+.statbox{
+  border:1px solid var(--stroke);
+  border-radius:14px;
+  padding:10px 12px;
+  background:rgba(0,0,0,.12);
+}
+.statbox__label{font-size:12px;color:var(--muted)}
+.statbox__value{font-size:18px;font-weight:1000;margin-top:4px}
+.unit{color:var(--accent); font-weight:1000}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:10px 0 12px;
+}
+
+.board{
+  display:grid;
+  gap:10px;
+  margin-top:10px;
+}
+
+.card{
+  position:relative;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.18);
+  aspect-ratio: 1 / 1;
+  cursor:pointer;
+  overflow:hidden;
+  user-select:none;
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+}
+.card:disabled{cursor:not-allowed}
+.card__inner{
+  position:absolute; inset:0;
+  display:grid;
+  place-items:center;
+  transform-style:preserve-3d;
+  transition: transform .18s ease;
+}
+.card.is-flipped .card__inner,
+.card.is-matched .card__inner{
+  transform: rotateY(180deg);
+}
+.face{
+  position:absolute; inset:0;
+  display:grid;
+  place-items:center;
+  backface-visibility:hidden;
+}
+.face--front{
+  font-size:24px;
+  color:rgba(255,255,255,.75);
+}
+.face--back{
+  transform: rotateY(180deg);
+  font-size:34px;
+}
+.card.is-matched{
+  border-color: rgba(247,200,67,.22);
+  background: linear-gradient(180deg, rgba(247,200,67,.14), rgba(0,0,0,.16));
+}
+
+.records{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:10px;
+}
+.record{
+  border:1px solid var(--stroke);
+  border-radius:14px;
+  padding:12px;
+  background:rgba(0,0,0,.12);
+}
+.record__name{font-weight:1000}
+.record__val{color:var(--muted); margin-top:4px}
