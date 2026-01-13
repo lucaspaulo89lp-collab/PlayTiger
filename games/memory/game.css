@@ -6,6 +6,7 @@
 @media (max-width: 900px){
   .memory-wrap{grid-template-columns:1fr}
 }
+
 .panel{
   border:1px solid var(--stroke);
   border-radius:var(--radius);
@@ -13,6 +14,7 @@
   box-shadow:var(--shadow);
   padding:18px;
 }
+
 .panel--side{height:fit-content}
 .panel__head{margin-bottom:12px}
 .panel__title{margin:0 0 6px; font-size:20px}
@@ -110,6 +112,14 @@ select{
   background: linear-gradient(180deg, rgba(247,200,67,.14), rgba(0,0,0,.16));
 }
 
+/* pop feedback */
+.card.is-matched{ animation: pop .22s cubic-bezier(.2,.9,.2,1); }
+@keyframes pop{
+  0%{transform:scale(.98)}
+  60%{transform:scale(1.02)}
+  100%{transform:scale(1)}
+}
+
 .records{
   display:flex;
   flex-direction:column;
@@ -124,15 +134,6 @@ select{
 }
 .record__name{font-weight:1000}
 .record__val{color:var(--muted); margin-top:4px}
-/* match feedback premium */
-.card.is-matched{
-  animation: pop .22s cubic-bezier(.2,.9,.2,1);
-}
-@keyframes pop{
-  0%{transform:scale(.98)}
-  60%{transform:scale(1.02)}
-  100%{transform:scale(1)}
-}
 
 /* modal vitória */
 .winModal{
@@ -156,3 +157,18 @@ select{
 .winModal__text{margin:0 0 14px;color:var(--muted);line-height:1.45}
 .winModal__row{display:flex;gap:10px;flex-wrap:wrap}
 
+/* botão som */
+.sfxToggle{
+  margin-left:10px;
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.85);
+  font-size:12px;
+  cursor:pointer;
+}
+.sfxToggle:hover{
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.16);
+}
