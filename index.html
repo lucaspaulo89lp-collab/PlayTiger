@@ -4,9 +4,258 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PlayTiger — Portal de Jogos</title>
-  <meta name="description" content="PlayTiger: portal de jogos com TigerCoin (TGC). Seguro, legal e divertido." />
-  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="./assets/css/main.css" />
+
+  <!-- HOME PREMIUM (isolado pra não quebrar o resto) -->
+  <style>
+    :root{
+      --pt-bg0:#070a0f;
+      --pt-bg1:#0b0f14;
+      --pt-glass: rgba(255,255,255,.06);
+      --pt-stroke: rgba(255,255,255,.12);
+      --pt-shadow: 0 22px 70px rgba(0,0,0,.60);
+      --pt-ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    html,body{
+      background:
+        radial-gradient(1200px 600px at 12% 10%, rgba(247,200,67,.10), transparent 55%),
+        radial-gradient(900px 520px at 85% 20%, rgba(80,140,255,.12), transparent 60%),
+        linear-gradient(180deg, var(--pt-bg0), var(--pt-bg1));
+    }
+
+    /* evita “apagado” por camadas antigas */
+    body{ color: rgba(255,255,255,.90); }
+
+    .home{
+      padding: 18px 0 40px;
+    }
+
+    .hero{
+      position: relative;
+      border: 1px solid var(--pt-stroke);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: var(--pt-shadow);
+      background:
+        radial-gradient(900px 400px at 18% 20%, rgba(247,200,67,.12), transparent 60%),
+        radial-gradient(900px 400px at 82% 25%, rgba(80,140,255,.12), transparent 60%),
+        rgba(0,0,0,.18);
+      min-height: 320px;
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: url("./assets/img/hero.webp");
+      background-size: cover;
+      background-position: center;
+      opacity:.34;
+      filter: saturate(1.05) contrast(1.05);
+      pointer-events:none;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(6,10,16,.92), rgba(6,10,16,.55), rgba(6,10,16,.30)),
+        radial-gradient(900px 520px at 30% 30%, rgba(0,0,0,.0), rgba(0,0,0,.45));
+      pointer-events:none;
+    }
+
+    .hero__inner{
+      position: relative;
+      z-index: 1;
+      padding: 22px;
+      display: grid;
+      gap: 12px;
+      max-width: 980px;
+    }
+
+    .hero__kicker{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      color: rgba(255,255,255,.72);
+      font-size: 13px;
+    }
+
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding: 6px 10px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero__title{
+      margin: 0;
+      font-size: clamp(26px, 3.2vw, 44px);
+      letter-spacing: -0.6px;
+      line-height: 1.05;
+    }
+
+    .hero__desc{
+      margin: 0;
+      color: rgba(255,255,255,.72);
+      max-width: 68ch;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+
+    .hero__cta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 6px;
+      align-items:center;
+    }
+
+    .btn{
+      border-radius: 14px !important;
+      transition: transform .08s var(--pt-ease), filter .18s var(--pt-ease) !important;
+    }
+    .btn:active{ transform: translateY(1px) scale(.99); }
+
+    .ctaNote{
+      color: rgba(255,255,255,.70);
+      font-size: 12px;
+      margin-left: 2px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px){ .grid{ grid-template-columns: 1fr; } }
+
+    .gcard{
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: 0 18px 50px rgba(0,0,0,.55);
+      transition: transform .18s var(--pt-ease), box-shadow .18s var(--pt-ease);
+    }
+    .gcard:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 26px 70px rgba(0,0,0,.62);
+    }
+
+    .gcard__media{
+      height: 160px;
+      background: radial-gradient(800px 220px at 20% 20%, rgba(247,200,67,.18), transparent 60%),
+                  radial-gradient(800px 220px at 80% 40%, rgba(80,140,255,.18), transparent 65%),
+                  rgba(0,0,0,.18);
+      position: relative;
+    }
+    .gcard__media::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image: var(--img);
+      background-size: cover;
+      background-position: center;
+      opacity:.55;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .gcard__media::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.65));
+    }
+
+    .badge{
+      position:absolute;
+      left: 12px; top: 12px;
+      z-index: 1;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.24);
+      color: rgba(255,255,255,.85);
+      font-size: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .gcard__body{
+      padding: 14px 14px 14px;
+      display:grid;
+      gap: 8px;
+    }
+
+    .gcard__title{
+      margin:0;
+      font-size: 16px;
+      letter-spacing: -0.2px;
+    }
+    .gcard__text{
+      margin:0;
+      color: rgba(255,255,255,.70);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .gcard__row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 4px;
+    }
+
+    .mini{
+      font-size: 12px;
+      color: rgba(255,255,255,.65);
+    }
+
+    .sectionTitle{
+      margin: 18px 0 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,.75);
+      letter-spacing: .2px;
+    }
+
+    /* topbar reforçada (não some) */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(7,10,15,.85), rgba(7,10,15,.55));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* botão som padrão (se main.css não tiver) */
+    .sfxToggle{
+      margin-left:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.85);
+      font-size:12px;
+      cursor:pointer;
+    }
+    .sfxToggle:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    /* fallback caso não exista imagem */
+    .noimg .gcard__media::before{ opacity: 0; }
+  </style>
 </head>
+
 <body>
   <header class="topbar">
     <div class="container topbar__inner">
@@ -16,93 +265,184 @@
       </a>
 
       <nav class="nav">
-        <a class="nav__link" href="dashboard.html">Dashboard</a>
-        <a class="nav__link" href="login.html">Entrar</a>
+        <a class="nav__link" href="./dashboard.html">Dashboard</a>
+        <a class="nav__link" href="./login.html">Entrar</a>
       </nav>
 
-      <div class="wallet" aria-label="Carteira TigerCoin">
-        <span class="wallet__label" id="hello">Olá, Visitante</span>
+      <div class="wallet">
+        <span class="wallet__label" id="hello">Olá</span>
         <span class="wallet__value" id="walletTGC">0</span>
         <span class="wallet__unit">TGC</span>
       </div>
+
+      <button class="sfxToggle" id="sfxToggle" type="button" aria-label="Alternar som">
+        Som: <span id="sfxState">ON</span>
+      </button>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <h1 class="hero__title">Jogos rápidos, progressão e <span class="accent">TigerCoin</span>.</h1>
-      <p class="hero__subtitle">
-        100% entretenimento. Sem apostas. Sem dinheiro real. Só habilidade, diversão e recompensas internas.
-      </p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="games/clicker/index.html">Jogar agora (Tiger Clicker)</a>
-        <button class="btn btn--ghost" id="btnDaily">Resgatar bônus diário</button>
-      </div>
-      <p class="hint" id="dailyHint"></p>
-    </section>
+  <main class="container home">
+    <section class="hero" id="hero">
+      <div class="hero__inner">
+        <div class="hero__kicker">
+          <span class="pill">✅ 100% entretenimento</span>
+          <span class="pill">✅ Sem apostas</span>
+          <span class="pill">🪙 TGC fictícia</span>
+          <span class="pill">🎯 Recompensa por habilidade</span>
+        </div>
 
-    <section class="section">
-      <div class="section__head">
-        <h2 class="section__title">Jogos</h2>
-        <p class="section__desc">Comece pelo Clicker (com economia). Depois seguimos com Memory e 2048 completos.</p>
-      </div>
+        <h1 class="hero__title">Jogos rápidos, progressão e TigerCoin.</h1>
+        <p class="hero__desc">
+          Um portal de minijogos com sensação premium: feedback, ritmo, progresso e recompensas internas (fictícias).
+          Tudo focado em habilidade e diversão.
+        </p>
 
-      <div class="grid">
-        <article class="card">
-          <div class="card__badge">Novo</div>
-          <h3 class="card__title">Tiger Clicker</h3>
-          <p class="card__text">Clique, ganhe TGC e desbloqueie upgrades. Jogo perfeito para retenção.</p>
-          <a class="btn btn--primary" href="games/clicker/index.html">Jogar</a>
-        </article>
-
-        <article class="card">
-          <div class="card__badge">Em breve</div>
-          <h3 class="card__title">Tiger Memory</h3>
-          <p class="card__text">Vamos transformar em jogo completo na próxima etapa.</p>
-          <a class="btn btn--ghost" href="games/memory/index.html">Abrir</a>
-        </article>
-
-        <article class="card">
-          <div class="card__badge">Em breve</div>
-          <h3 class="card__title">Tiger 2048</h3>
-          <p class="card__text">Vamos adicionar a versão completa com pontuação e TGC.</p>
-          <a class="btn btn--ghost" href="games/2048/index.html">Criar placeholder</a>
-        </article>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="./games/clicker/">Jogar agora (Tiger Clicker)</a>
+          <button class="btn btn--ghost" id="dailyBonus" type="button">Resgatar bônus diário</button>
+          <span class="ctaNote" id="bonusNote">Bônus disponível 1x por dia.</span>
+        </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="legalbox">
-        <h3 class="legalbox__title">Transparência & Legalidade</h3>
-        <ul class="legalbox__list">
-          <li>✅ TigerCoin (TGC) é <b>fictícia</b> e só existe dentro do PlayTiger.</li>
-          <li>✅ Não há apostas, conversão em dinheiro ou premiação real.</li>
-          <li>✅ Sistema baseado em habilidade, pontos e cosméticos no futuro.</li>
-        </ul>
+    <div class="sectionTitle">Jogos</div>
+
+    <section class="grid" id="gamesGrid">
+      <!-- Clicker -->
+      <article class="gcard" style="--img:url('./assets/img/clicker.webp');">
+        <div class="gcard__media">
+          <span class="badge">🔥 Novo • Economia</span>
+        </div>
+        <div class="gcard__body">
+          <h3 class="gcard__title">Tiger Clicker</h3>
+          <p class="gcard__text">Round de 30s. Faça combo, aumente TPS e ganhe TGC por performance. Upgrade com progressão.</p>
+          <div class="gcard__row">
+            <a class="btn btn--primary" href="./games/clicker/">Jogar</a>
+            <span class="mini">Ritmo • Combo • Progressão</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Memory -->
+      <article class="gcard" style="--img:url('./assets/img/memory.webp');">
+        <div class="gcard__media">
+          <span class="badge">🧠 Foco • Tempo</span>
+        </div>
+        <div class="gcard__body">
+          <h3 class="gcard__title">Tiger Memory</h3>
+          <p class="gcard__text">Encontre pares com velocidade. Modal de vitória, feedback e recompensa baseada em habilidade.</p>
+          <div class="gcard__row">
+            <a class="btn btn--primary" href="./games/memory/">Abrir</a>
+            <span class="mini">Memória • Reflexo • Precisão</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2048 -->
+      <article class="gcard" style="--img:url('./assets/img/2048.webp');">
+        <div class="gcard__media">
+          <span class="badge">🧩 Estratégia</span>
+        </div>
+        <div class="gcard__body">
+          <h3 class="gcard__title">Tiger 2048</h3>
+          <p class="gcard__text">Lógica e estratégia. Versão pronta para integrar pontuação + TGC (próxima etapa).</p>
+          <div class="gcard__row">
+            <a class="btn btn--ghost" href="./games/2048/">Abrir</a>
+            <span class="mini">Lógica • Planejamento</span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="sectionTitle">Transparência & Legalidade</div>
+    <section class="gcard" style="margin-top:10px;">
+      <div class="gcard__body">
+        <h3 class="gcard__title">Sem apostas. Sem dinheiro real. 100% habilidade.</h3>
+        <p class="gcard__text">
+          A TigerCoin (TGC) é uma moeda fictícia usada apenas dentro do PlayTiger para progressão e diversão.
+          Não existe compra, saque ou conversão para dinheiro real.
+        </p>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer__inner">
-      <span>© <span id="year"></span> PlayTiger</span>
-      <span class="muted">TigerCoin é moeda fictícia para uso interno.</span>
-    </div>
-  </footer>
+  <script src="./assets/js/core.js"></script>
+  <script src="./assets/js/sfx.js"></script>
 
-  <script src="assets/js/core.js"></script>
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // ===== Header (usuário + carteira)
     const u = PlayTiger.user.get();
     document.getElementById("hello").textContent = "Olá, " + u.name;
-    document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
+    const refreshWallet = () => document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
+    refreshWallet();
 
-    const hint = document.getElementById("dailyHint");
-    document.getElementById("btnDaily").addEventListener("click", () => {
-      const r = PlayTiger.stats.claimDailyBonus();
-      document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
-      hint.textContent = r.message;
+    // ===== Som ON/OFF
+    const sfxState = document.getElementById("sfxState");
+    const renderSfx = () => sfxState.textContent = (window.PlayTigerSFX?.isOn?.() ? "ON" : "OFF");
+    renderSfx();
+    document.getElementById("sfxToggle").addEventListener("click", () => {
+      try { PlayTigerSFX.toggle(); PlayTigerSFX.click(); } catch {}
+      renderSfx();
     });
+
+    // ===== Bônus diário (1x por dia)
+    const BONUS_KEY = "playtiger_daily_bonus";
+    const BONUS_VALUE = 12; // você pode ajustar depois
+    const bonusNote = document.getElementById("bonusNote");
+    const btnBonus = document.getElementById("dailyBonus");
+
+    function canClaim(){
+      const last = localStorage.getItem(BONUS_KEY);
+      if (!last) return true;
+      const lastDate = new Date(last);
+      const now = new Date();
+      // 1 vez por dia (pela data local)
+      return lastDate.toDateString() !== now.toDateString();
+    }
+
+    function renderBonus(){
+      if (canClaim()){
+        btnBonus.disabled = false;
+        bonusNote.textContent = `Bônus disponível: +${BONUS_VALUE} TGC (1x por dia).`;
+      } else {
+        btnBonus.disabled = true;
+        bonusNote.textContent = "Bônus já resgatado hoje. Volte amanhã ✅";
+      }
+    }
+
+    btnBonus.addEventListener("click", () => {
+      if (!canClaim()) return;
+      PlayTiger.wallet.addTGC(BONUS_VALUE);
+      localStorage.setItem(BONUS_KEY, new Date().toISOString());
+      refreshWallet();
+      renderBonus();
+      try { PlayTigerSFX.win(); } catch {}
+      if (navigator.vibrate) navigator.vibrate([12,20,12]);
+    });
+
+    // ===== Se imagens não existirem, aplica fallback (não deixa feio)
+    const testImg = (src) => new Promise((res) => {
+      const img = new Image();
+      img.onload = () => res(true);
+      img.onerror = () => res(false);
+      img.src = src + "?v=" + Date.now();
+    });
+
+    (async () => {
+      const okHero = await testImg("./assets/img/hero.webp");
+      if (!okHero) document.getElementById("hero").classList.add("noimg");
+
+      const cards = document.querySelectorAll(".gcard");
+      for (const c of cards){
+        const m = getComputedStyle(c).getPropertyValue("--img").trim();
+        if (!m || !m.startsWith("url(")) { c.classList.add("noimg"); continue; }
+        const url = m.slice(4, -1).replace(/["']/g,"");
+        const ok = await testImg(url);
+        if (!ok) c.classList.add("noimg");
+      }
+    })();
+
+    renderBonus();
   </script>
 </body>
 </html>
