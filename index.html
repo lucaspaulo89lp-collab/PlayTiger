@@ -24,12 +24,9 @@
         linear-gradient(180deg, var(--pt-bg0), var(--pt-bg1));
     }
 
-    /* evita “apagado” por camadas antigas */
     body{ color: rgba(255,255,255,.90); }
 
-    .home{
-      padding: 18px 0 40px;
-    }
+    .home{ padding: 18px 0 40px; }
 
     .hero{
       position: relative;
@@ -44,23 +41,25 @@
       min-height: 320px;
     }
 
+    /* IMAGEM HERO (mais presente) */
     .hero::before{
       content:"";
       position:absolute; inset:0;
       background-image: url("./assets/img/hero.webp");
       background-size: cover;
       background-position: center;
-      opacity:.34;
-      filter: saturate(1.05) contrast(1.05);
+      opacity:.45;                 /* era .34 */
+      filter: saturate(1.08) contrast(1.08);
       pointer-events:none;
     }
 
+    /* OVERLAY HERO (menos “véu preto”) */
     .hero::after{
       content:"";
       position:absolute; inset:0;
       background:
-        linear-gradient(90deg, rgba(6,10,16,.92), rgba(6,10,16,.55), rgba(6,10,16,.30)),
-        radial-gradient(900px 520px at 30% 30%, rgba(0,0,0,.0), rgba(0,0,0,.45));
+        linear-gradient(90deg, rgba(6,10,16,.78), rgba(6,10,16,.40), rgba(6,10,16,.20)),
+        radial-gradient(900px 520px at 30% 30%, rgba(0,0,0,.0), rgba(0,0,0,.30));
       pointer-events:none;
     }
 
@@ -102,7 +101,7 @@
 
     .hero__desc{
       margin: 0;
-      color: rgba(255,255,255,.72);
+      color: rgba(255,255,255,.78); /* um pouco mais claro */
       max-width: 68ch;
       line-height: 1.45;
       font-size: 15px;
@@ -123,7 +122,7 @@
     .btn:active{ transform: translateY(1px) scale(.99); }
 
     .ctaNote{
-      color: rgba(255,255,255,.70);
+      color: rgba(255,255,255,.72);
       font-size: 12px;
       margin-left: 2px;
     }
@@ -156,19 +155,23 @@
                   rgba(0,0,0,.18);
       position: relative;
     }
+
+    /* IMAGEM DO CARD (mais viva) */
     .gcard__media::before{
       content:"";
       position:absolute; inset:0;
       background-image: var(--img);
       background-size: cover;
       background-position: center;
-      opacity:.55;
-      filter: saturate(1.05) contrast(1.05);
+      opacity:.85; /* era .55 */
+      filter: saturate(1.15) contrast(1.12);
     }
+
+    /* OVERLAY DO CARD (menos escuro) */
     .gcard__media::after{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.65));
+      background: linear-gradient(180deg, rgba(0,0,0,.0), rgba(0,0,0,.35));
     }
 
     .badge{
@@ -182,7 +185,7 @@
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.24);
-      color: rgba(255,255,255,.85);
+      color: rgba(255,255,255,.90);
       font-size: 12px;
       backdrop-filter: blur(10px);
     }
@@ -200,7 +203,7 @@
     }
     .gcard__text{
       margin:0;
-      color: rgba(255,255,255,.70);
+      color: rgba(255,255,255,.74);
       line-height: 1.45;
       font-size: 13px;
     }
@@ -215,17 +218,16 @@
 
     .mini{
       font-size: 12px;
-      color: rgba(255,255,255,.65);
+      color: rgba(255,255,255,.68);
     }
 
     .sectionTitle{
       margin: 18px 0 8px;
       font-size: 14px;
-      color: rgba(255,255,255,.75);
+      color: rgba(255,255,255,.80);
       letter-spacing: .2px;
     }
 
-    /* topbar reforçada (não some) */
     .topbar{
       position: sticky;
       top:0;
@@ -235,7 +237,6 @@
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
 
-    /* botão som padrão (se main.css não tiver) */
     .sfxToggle{
       margin-left:10px;
       padding:8px 10px;
@@ -251,8 +252,8 @@
       border-color: rgba(255,255,255,.16);
     }
 
-    /* fallback caso não exista imagem */
     .noimg .gcard__media::before{ opacity: 0; }
+    .noimg.hero::before{ opacity: 0; }
   </style>
 </head>
 
@@ -387,7 +388,7 @@
 
     // ===== Bônus diário (1x por dia)
     const BONUS_KEY = "playtiger_daily_bonus";
-    const BONUS_VALUE = 12; // você pode ajustar depois
+    const BONUS_VALUE = 12;
     const bonusNote = document.getElementById("bonusNote");
     const btnBonus = document.getElementById("dailyBonus");
 
@@ -396,7 +397,6 @@
       if (!last) return true;
       const lastDate = new Date(last);
       const now = new Date();
-      // 1 vez por dia (pela data local)
       return lastDate.toDateString() !== now.toDateString();
     }
 
