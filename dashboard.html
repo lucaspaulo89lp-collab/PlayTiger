@@ -7,15 +7,146 @@
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
-  <div class="container" style="padding:20px">
-    <h2>Dashboard (placeholder)</h2>
-    <p id="tgc"></p>
-    <p><a href="./">Voltar</a></p>
-  </div>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="./">
+        <span class="brand__mark">🐯</span>
+        <span class="brand__text">PlayTiger</span>
+      </a>
+
+      <nav class="nav">
+        <a class="nav__link" href="./">Home</a>
+        <a class="nav__link" href="login.html">Conta</a>
+        <a class="nav__link" href="games/clicker/index.html">Tiger Clicker</a>
+      </nav>
+
+      <div class="wallet">
+        <span class="wallet__label" id="hello">Olá</span>
+        <span class="wallet__value" id="walletTGC">0</span>
+        <span class="wallet__unit">TGC</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section__head">
+        <h1 class="section__title">Dashboard</h1>
+        <p class="section__desc">Seus dados ficam salvos neste navegador (local). Sem backend por enquanto.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card__badge">Perfil</div>
+          <h3 class="card__title" id="playerName">Visitante</h3>
+          <p class="card__text">Troque seu nome em “Conta”.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn btn--ghost" href="login.html">Gerenciar conta</a>
+            <button class="btn btn--ghost" id="btnLogout">Sair</button>
+          </div>
+          <p class="hint" id="logoutMsg"></p>
+        </article>
+
+        <article class="card">
+          <div class="card__badge">Carteira</div>
+          <h3 class="card__title"><span id="balance">0</span> <span style="color:var(--accent);font-weight:1000;">TGC</span></h3>
+          <p class="card__text">Moeda fictícia interna. Sem valor fora do site.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="btn btn--primary" href="games/clicker/index.html">Ganhar TGC no Clicker</a>
+            <button class="btn btn--ghost" id="btnDaily">Bônus diário</button>
+          </div>
+          <p class="hint" id="dailyMsg"></p>
+        </article>
+
+        <article class="card">
+          <div class="card__badge">Estatísticas</div>
+          <h3 class="card__title">Seu desempenho</h3>
+          <p class="card__text">Resumo das suas partidas.</p>
+
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px;">
+            <div style="border:1px solid var(--stroke);border-radius:14px;padding:10px 12px;background:rgba(0,0,0,.12);">
+              <div class="muted" style="font-size:12px;">Jogos jogados</div>
+              <div style="font-size:20px;font-weight:1000;" id="gamesPlayed">0</div>
+            </div>
+            <div style="border:1px solid var(--stroke);border-radius:14px;padding:10px 12px;background:rgba(0,0,0,.12);">
+              <div class="muted" style="font-size:12px;">Streak diário</div>
+              <div style="font-size:20px;font-weight:1000;" id="streak">0</div>
+            </div>
+            <div style="border:1px solid var(--stroke);border-radius:14px;padding:10px 12px;background:rgba(0,0,0,.12);">
+              <div class="muted" style="font-size:12px;">Best TPS (Clicker)</div>
+              <div style="font-size:20px;font-weight:1000;" id="bestTPS">0.0</div>
+            </div>
+            <div style="border:1px solid var(--stroke);border-radius:14px;padding:10px 12px;background:rgba(0,0,0,.12);">
+              <div class="muted" style="font-size:12px;">Último score (cliques)</div>
+              <div style="font-size:20px;font-weight:1000;" id="lastScore">0</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section__head">
+        <h2 class="section__title">Atalhos</h2>
+        <p class="section__desc">Acesso rápido aos jogos.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="card__badge">Recomendado</div>
+          <h3 class="card__title">Tiger Clicker</h3>
+          <p class="card__text">Jogo completo com TGC + upgrades.</p>
+          <a class="btn btn--primary" href="games/clicker/index.html">Abrir</a>
+        </article>
+
+        <article class="card">
+          <div class="card__badge">Próximo</div>
+          <h3 class="card__title">Tiger Memory</h3>
+          <p class="card__text">Vamos finalizar o jogo na próxima etapa.</p>
+          <a class="btn btn--ghost" href="games/memory/index.html">Abrir</a>
+        </article>
+
+        <article class="card">
+          <div class="card__badge">Próximo</div>
+          <h3 class="card__title">Tiger 2048</h3>
+          <p class="card__text">Implementação completa na sequência.</p>
+          <a class="btn btn--ghost" href="games/2048/index.html">Abrir</a>
+        </article>
+      </div>
+    </section>
+  </main>
 
   <script src="assets/js/core.js"></script>
   <script>
-    document.getElementById("tgc").textContent = "TGC atual: " + PlayTiger.wallet.getTGC();
+    const u = PlayTiger.user.get();
+    const s = PlayTiger.stats.get();
+
+    const setWalletUI = () => {
+      document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
+      document.getElementById("balance").textContent = PlayTiger.wallet.getTGC();
+    };
+
+    document.getElementById("hello").textContent = "Olá, " + u.name;
+    document.getElementById("playerName").textContent = u.name + (u.isLogged ? "" : " (Visitante)");
+
+    setWalletUI();
+
+    document.getElementById("gamesPlayed").textContent = s.gamesPlayed || 0;
+    document.getElementById("streak").textContent = s.streak || 0;
+    document.getElementById("bestTPS").textContent = (s.clicker?.bestTPS || 0).toFixed(1);
+    document.getElementById("lastScore").textContent = s.clicker?.lastScore || 0;
+
+    document.getElementById("btnDaily").addEventListener("click", () => {
+      const r = PlayTiger.stats.claimDailyBonus();
+      setWalletUI();
+      document.getElementById("dailyMsg").textContent = r.message;
+    });
+
+    document.getElementById("btnLogout").addEventListener("click", () => {
+      PlayTiger.user.logout();
+      document.getElementById("logoutMsg").textContent = "Saiu da conta. Você agora é Visitante.";
+      setTimeout(() => location.href = "login.html", 500);
+    });
   </script>
 </body>
 </html>
