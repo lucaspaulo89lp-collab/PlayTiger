@@ -14,15 +14,21 @@
         <span class="brand__mark">🐯</span>
         <span class="brand__text">PlayTiger</span>
       </a>
+
       <nav class="nav">
         <a class="nav__link" href="../../">Home</a>
         <a class="nav__link" href="../../dashboard.html">Dashboard</a>
       </nav>
+
       <div class="wallet">
         <span class="wallet__label" id="hello">Olá</span>
         <span class="wallet__value" id="walletTGC">0</span>
         <span class="wallet__unit">TGC</span>
       </div>
+
+      <button class="sfxToggle" id="sfxToggle" type="button" aria-label="Alternar som">
+        Som: <span id="sfxState">ON</span>
+      </button>
     </div>
   </header>
 
@@ -32,61 +38,146 @@
         <div class="panel">
           <div class="panel__head">
             <h1 class="panel__title">Tiger Clicker</h1>
-            <p class="panel__sub">Clique rápido, aumente seu ritmo e transforme cliques em TigerCoin (fictícia).</p>
+            <p class="panel__sub">Clique com ritmo. Faça combos. Ganhe TGC por desempenho. Sem apostas, sem dinheiro real.</p>
           </div>
 
-          <div class="meter">
-            <div class="meter__row">
-              <div class="meter__box">
-                <div class="meter__label">Tempo</div>
-                <div class="meter__value" id="timeLeft">20</div>
-              </div>
-              <div class="meter__box">
-                <div class="meter__label">Cliques</div>
-                <div class="meter__value" id="clicks">0</div>
-              </div>
-              <div class="meter__box">
-                <div class="meter__label">TPS</div>
-                <div class="meter__value" id="tps">0.0</div>
-              </div>
-              <div class="meter__box">
-                <div class="meter__label">Recompensa</div>
-                <div class="meter__value"><span id="reward">0</span> <span class="unit">TGC</span></div>
-              </div>
+          <div class="hud">
+            <div class="hudbox">
+              <div class="hudbox__label">Tempo</div>
+              <div class="hudbox__value"><span id="timeLeft">30</span>s</div>
+            </div>
+            <div class="hudbox">
+              <div class="hudbox__label">Cliques</div>
+              <div class="hudbox__value" id="clicks">0</div>
+            </div>
+            <div class="hudbox">
+              <div class="hudbox__label">TPS</div>
+              <div class="hudbox__value"><span id="tps">0.0</span></div>
+            </div>
+            <div class="hudbox">
+              <div class="hudbox__label">Combo</div>
+              <div class="hudbox__value"><span id="combo">x1</span></div>
+            </div>
+            <div class="hudbox hudbox--accent">
+              <div class="hudbox__label">Recompensa</div>
+              <div class="hudbox__value"><span id="reward">0</span> <span class="unit">TGC</span></div>
             </div>
           </div>
 
-          <button class="bigbtn" id="bigBtn" disabled>
-            <span class="bigbtn__emoji">🐾</span>
-            <span class="bigbtn__text">CLIQUE</span>
-            <span class="bigbtn__hint">Aperte “Iniciar”</span>
-          </button>
+          <div class="arena">
+            <button class="tap" id="tap" type="button" aria-label="Clique para marcar pontos">
+              <span class="tap__ring" aria-hidden="true"></span>
+              <span class="tap__core" aria-hidden="true"></span>
+              <span class="tap__label">
+                <span class="tap__title">TAP</span>
+                <span class="tap__sub">ritmo + foco</span>
+              </span>
+            </button>
+
+            <div class="floaters" id="floaters" aria-hidden="true"></div>
+          </div>
 
           <div class="actions">
-            <button class="btn btn--primary" id="start">Iniciar (20s)</button>
-            <button class="btn btn--ghost" id="restart" disabled>Reiniciar</button>
+            <button class="btn btn--primary" id="start">Iniciar (30s)</button>
             <button class="btn btn--ghost" id="cashout" disabled>Coletar TGC</button>
+            <button class="btn btn--ghost" id="retry" disabled>Tentar de novo</button>
           </div>
 
           <p class="hint" id="msg"></p>
         </div>
 
         <aside class="panel panel--side">
-          <h3 class="panel__title">Upgrades (gaste TGC)</h3>
-          <p class="panel__sub">Aumente recompensa e qualidade de vida. Tudo fictício e interno.</p>
+          <h3 class="panel__title">Progressão</h3>
+          <p class="panel__sub">Melhore seu desempenho e desbloqueie upgrades (salvos neste navegador).</p>
 
-          <div class="shop" id="shop"></div>
+          <div class="shop">
+            <div class="shop__item">
+              <div class="shop__meta">
+                <div class="shop__name">Foco</div>
+                <div class="shop__desc">+5% recompensa final (por nível)</div>
+              </div>
+              <div class="shop__actions">
+                <span class="price"><span id="costFocus">30</span> TGC</span>
+                <button class="btn btn--primary" id="buyFocus">Comprar</button>
+              </div>
+            </div>
 
-          <div class="small">
-            <div><b>Seu melhor TPS:</b> <span id="bestTPS">0.0</span></div>
-            <div><b>Jogos jogados:</b> <span id="gamesPlayed">0</span></div>
+            <div class="shop__item">
+              <div class="shop__meta">
+                <div class="shop__name">Controle</div>
+                <div class="shop__desc">Combo decai mais devagar</div>
+              </div>
+              <div class="shop__actions">
+                <span class="price"><span id="costControl">45</span> TGC</span>
+                <button class="btn btn--primary" id="buyControl">Comprar</button>
+              </div>
+            </div>
+
+            <div class="shop__item">
+              <div class="shop__meta">
+                <div class="shop__name">Energia</div>
+                <div class="shop__desc">+1s no tempo do round (por nível)</div>
+              </div>
+              <div class="shop__actions">
+                <span class="price"><span id="costEnergy">55</span> TGC</span>
+                <button class="btn btn--primary" id="buyEnergy">Comprar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 class="panel__title">Recordes</h3>
+          <div class="records">
+            <div class="record">
+              <div class="record__name">Melhor TPS</div>
+              <div class="record__val"><span id="bestTPS">0.0</span></div>
+            </div>
+            <div class="record">
+              <div class="record__name">Melhor Recompensa</div>
+              <div class="record__val"><span id="bestReward">0</span> TGC</div>
+            </div>
+            <div class="record">
+              <div class="record__name">Nível Foco</div>
+              <div class="record__val"><span id="lvlFocus">0</span></div>
+            </div>
+            <div class="record">
+              <div class="record__name">Nível Controle</div>
+              <div class="record__val"><span id="lvlControl">0</span></div>
+            </div>
+            <div class="record">
+              <div class="record__name">Nível Energia</div>
+              <div class="record__val"><span id="lvlEnergy">0</span></div>
+            </div>
+          </div>
+
+          <div class="legalbox" style="margin-top:14px;">
+            <h3 class="legalbox__title">Legal & Seguro</h3>
+            <ul class="legalbox__list">
+              <li>✅ TGC é fictícia e só existe no PlayTiger.</li>
+              <li>✅ Sem apostas e sem dinheiro real.</li>
+              <li>✅ Recompensa por habilidade (ritmo e foco).</li>
+            </ul>
           </div>
         </aside>
       </div>
     </section>
   </main>
 
+  <!-- Modal final -->
+  <div class="winModal" id="winModal" role="dialog" aria-modal="true">
+    <div class="winModal__card">
+      <h3 class="winModal__title">Round concluído</h3>
+      <p class="winModal__text" id="winText">—</p>
+      <div class="winModal__row">
+        <button class="btn btn--primary" id="btnCashout2">Coletar TGC</button>
+        <button class="btn btn--ghost" id="btnCloseWin">Fechar</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../../assets/js/core.js"></script>
+  <script src="../../assets/js/sfx.js"></script>
   <script src="./game.js"></script>
 </body>
 </html>
