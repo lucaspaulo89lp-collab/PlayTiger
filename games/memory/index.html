@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tiger Memory — PlayTiger</title>
   <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="./game.css" />
 </head>
 <body>
   <header class="topbar">
@@ -27,26 +28,74 @@
 
   <main class="container">
     <section class="section">
-      <div class="section__head">
-        <h1 class="section__title">Tiger Memory</h1>
-        <p class="section__desc">Em construção — próximo jogo completo depois do Clicker.</p>
-      </div>
+      <div class="memory-wrap">
+        <div class="panel">
+          <div class="panel__head">
+            <h1 class="panel__title">Tiger Memory</h1>
+            <p class="panel__sub">Encontre pares o mais rápido possível. Recompensa em TigerCoin (fictícia) baseada em habilidade.</p>
+          </div>
 
-      <div class="card">
-        <p class="card__text">Status: página carregando corretamente ✅</p>
-        <p class="card__text muted">Na próxima etapa eu te entrego o Memory completo com:
-          dificuldade, tempo, pontuação e recompensa em TGC.
-        </p>
-        <a class="btn btn--primary" href="../../">Voltar para Home</a>
+          <div class="controls">
+            <div class="select">
+              <label class="muted" for="mode">Dificuldade</label>
+              <select id="mode">
+                <option value="4x4">Fácil (4x4)</option>
+                <option value="4x5">Médio (4x5)</option>
+                <option value="6x6">Difícil (6x6)</option>
+              </select>
+            </div>
+
+            <div class="stats">
+              <div class="statbox">
+                <div class="statbox__label">Tempo</div>
+                <div class="statbox__value" id="time">0s</div>
+              </div>
+              <div class="statbox">
+                <div class="statbox__label">Movimentos</div>
+                <div class="statbox__value" id="moves">0</div>
+              </div>
+              <div class="statbox">
+                <div class="statbox__label">Pares</div>
+                <div class="statbox__value"><span id="pairs">0</span>/<span id="pairsTotal">0</span></div>
+              </div>
+              <div class="statbox">
+                <div class="statbox__label">Recompensa</div>
+                <div class="statbox__value"><span id="reward">0</span> <span class="unit">TGC</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn--primary" id="start">Iniciar</button>
+            <button class="btn btn--ghost" id="restart" disabled>Reiniciar</button>
+            <button class="btn btn--ghost" id="cashout" disabled>Coletar TGC</button>
+          </div>
+
+          <p class="hint" id="msg"></p>
+
+          <div class="board" id="board" aria-label="Tabuleiro do jogo da memória"></div>
+        </div>
+
+        <aside class="panel panel--side">
+          <h3 class="panel__title">Recordes</h3>
+          <p class="panel__sub">Melhor tempo por dificuldade (salvo neste navegador).</p>
+
+          <div class="records" id="records"></div>
+
+          <div class="legalbox" style="margin-top:14px;">
+            <h3 class="legalbox__title">Legal & Seguro</h3>
+            <ul class="legalbox__list">
+              <li>✅ TGC é fictícia e só serve no PlayTiger.</li>
+              <li>✅ Recompensa depende de desempenho (habilidade).</li>
+              <li>✅ Sem apostas, sem dinheiro real.</li>
+            </ul>
+          </div>
+        </aside>
       </div>
     </section>
   </main>
 
   <script src="../../assets/js/core.js"></script>
-  <script>
-    const u = PlayTiger.user.get();
-    document.getElementById("hello").textContent = "Olá, " + u.name;
-    document.getElementById("walletTGC").textContent = PlayTiger.wallet.getTGC();
-  </script>
+  <script src="./game.js"></script>
 </body>
 </html>
