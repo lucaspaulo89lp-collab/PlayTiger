@@ -1,0 +1,4 @@
+body{margin:0;font-family:system-ui;background:#0b0f14;color:#e8eef7}
+.topbar{padding:20px;border-bottom:1px solid rgba(255,255,255,.12)}
+.container{width:min(900px,92%);margin:0 auto}
+a{color:#3aa0ff}
