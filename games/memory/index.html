@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tiger Memory — PlayTiger</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+<body>
+  <div class="container" style="padding:20px">
+    <h2>Tiger Memory (placeholder)</h2>
+    <button id="gain">Ganhar +10 TGC</button>
+    <p id="out"></p>
+    <p><a href="../../">Voltar</a></p>
+  </div>
+
+  <script src="../../assets/js/core.js"></script>
+  <script>
+    const out = document.getElementById("out");
+    out.textContent = "TGC: " + PlayTiger.wallet.getTGC();
+    document.getElementById("gain").addEventListener("click", () => {
+      PlayTiger.wallet.addTGC(10);
+      out.textContent = "TGC: " + PlayTiger.wallet.getTGC();
+    });
+  </script>
+</body>
+</html>
