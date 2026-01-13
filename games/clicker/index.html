@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tiger Clicker — PlayTiger</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="./game.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="../../">
+        <span class="brand__mark">🐯</span>
+        <span class="brand__text">PlayTiger</span>
+      </a>
+      <nav class="nav">
+        <a class="nav__link" href="../../">Home</a>
+        <a class="nav__link" href="../../dashboard.html">Dashboard</a>
+      </nav>
+      <div class="wallet">
+        <span class="wallet__label" id="hello">Olá</span>
+        <span class="wallet__value" id="walletTGC">0</span>
+        <span class="wallet__unit">TGC</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="clicker-wrap">
+        <div class="panel">
+          <div class="panel__head">
+            <h1 class="panel__title">Tiger Clicker</h1>
+            <p class="panel__sub">Clique rápido, aumente seu ritmo e transforme cliques em TigerCoin (fictícia).</p>
+          </div>
+
+          <div class="meter">
+            <div class="meter__row">
+              <div class="meter__box">
+                <div class="meter__label">Tempo</div>
+                <div class="meter__value" id="timeLeft">20</div>
+              </div>
+              <div class="meter__box">
+                <div class="meter__label">Cliques</div>
+                <div class="meter__value" id="clicks">0</div>
+              </div>
+              <div class="meter__box">
+                <div class="meter__label">TPS</div>
+                <div class="meter__value" id="tps">0.0</div>
+              </div>
+              <div class="meter__box">
+                <div class="meter__label">Recompensa</div>
+                <div class="meter__value"><span id="reward">0</span> <span class="unit">TGC</span></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="bigbtn" id="bigBtn" disabled>
+            <span class="bigbtn__emoji">🐾</span>
+            <span class="bigbtn__text">CLIQUE</span>
+            <span class="bigbtn__hint">Aperte “Iniciar”</span>
+          </button>
+
+          <div class="actions">
+            <button class="btn btn--primary" id="start">Iniciar (20s)</button>
+            <button class="btn btn--ghost" id="restart" disabled>Reiniciar</button>
+            <button class="btn btn--ghost" id="cashout" disabled>Coletar TGC</button>
+          </div>
+
+          <p class="hint" id="msg"></p>
+        </div>
+
+        <aside class="panel panel--side">
+          <h3 class="panel__title">Upgrades (gaste TGC)</h3>
+          <p class="panel__sub">Aumente recompensa e qualidade de vida. Tudo fictício e interno.</p>
+
+          <div class="shop" id="shop"></div>
+
+          <div class="small">
+            <div><b>Seu melhor TPS:</b> <span id="bestTPS">0.0</span></div>
+            <div><b>Jogos jogados:</b> <span id="gamesPlayed">0</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../assets/js/core.js"></script>
+  <script src="./game.js"></script>
+</body>
+</html>
